@@ -1,1 +1,6 @@
-{}
+{
+    "semi": true,
+    "singleQuote": true,
+    "tabWith": 2,
+    "useTabs": false
+}

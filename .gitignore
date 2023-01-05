@@ -1,3 +1,7 @@
+aoc.session
+
+/data/
+
 # Logs
 logs
 *.log

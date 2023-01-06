@@ -7,17 +7,25 @@
   font-weight: normal;
 }
 
-
 h1 {
-  font-size: 24px;
+  font-size: 2em;
   font-weight: bold;
   text-shadow: 0 0 5px var(--color-text);
-  color: var(--color-title)
+  color: var(--color-title);
+
+  margin: 0;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 1.4em;
   font-weight: bold;
   text-shadow: 0 0 4px var(--color-text);
-  color: var(--color-title)
+  color: var(--color-title);
+
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text)
 }

@@ -25,10 +25,9 @@ nav {
 }
 
 nav a {
-  text-decoration: none;
   color: var(--color-text);
   font-weight: bold;
-  padding: 0 1em 0 0;
+  margin: 0 1em 0 0;
 }
 
 nav a:hover {

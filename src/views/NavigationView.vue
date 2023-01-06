@@ -27,14 +27,19 @@ nav {
 nav a {
   text-decoration: none;
   color: var(--color-text);
+  font-weight: bold;
   padding: 0 1em 0 0;
 }
 
-/* nav a.router-link-exact-active {
-  color: #8800f8;
+nav a:hover {
+  color: var(--color-selected);
+}
+
+nav a.router-link-exact-active {
+  text-shadow: 0 0 5px var(--color-text);
 }
 
 nav a.router-link-exact-active:hover {
-  color: #00ff88;
-} */
+  text-shadow: 0 0 5px var(--color-selected);
+}
 </style>

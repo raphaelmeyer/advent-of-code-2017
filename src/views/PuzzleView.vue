@@ -50,7 +50,7 @@ function selectInput(event: Event): void {
 </script>
 
 <template>
-  <h1>Day {{ puzzle?.day }}: {{ puzzle?.name }}</h1>
+  <h2>Day {{ puzzle?.day }}: {{ puzzle?.name }}</h2>
   <div>
     <p>Part One</p>
     <p>{{ resultPartOne }}</p>

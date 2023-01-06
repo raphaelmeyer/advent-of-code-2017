@@ -6,3 +6,18 @@
 
   font-weight: normal;
 }
+
+
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 0 0 5px var(--color-text);
+  color: var(--color-title)
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 0 0 4px var(--color-text);
+  color: var(--color-title)
+}

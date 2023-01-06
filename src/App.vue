@@ -14,8 +14,4 @@ import NavigationView from './views/NavigationView.vue';
   </main>
 </template>
 
-<style scoped>
-header > div {
-  display: block;
-}
-</style>
+<style scoped></style>

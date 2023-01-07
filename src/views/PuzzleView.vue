@@ -128,6 +128,8 @@ label {
 
   font-size: 1em;
   font-weight: bold;
+
+  user-select: none;
 }
 
 input {
@@ -143,6 +145,7 @@ input {
 
   display: block;
   overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .desc {

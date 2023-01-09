@@ -5,7 +5,7 @@ import NavigationView from './views/NavigationView.vue';
 
 <template>
   <header>
-    <h1>❄ Advent of Code 2017 ❄️</h1>
+    <h1>❄️ Advent of Code 2017 ❄️</h1>
     <NavigationView class="navigation" />
   </header>
 

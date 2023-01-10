@@ -5,6 +5,7 @@
   --color-title: #20D0A0;
   --color-selected: #D0A020;
   --color-link: #20A0D0;
+  --color-inactive: #8080A0;
 }
 
 body {

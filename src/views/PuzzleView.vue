@@ -7,8 +7,8 @@ import { useRoute } from 'vue-router';
 const store = useAocStore();
 const route = useRoute();
 
-const resultPartOne = ref('❓');
-const resultPartTwo = ref('❓');
+const answer = ref<{ one: string; two: string }>();
+const input = ref<string>();
 
 const solve = ref(false);
 const selectedDay = ref<number>();
@@ -19,20 +19,21 @@ const puzzle = computed(() => {
 
 watchEffect(() => {
   selectedDay.value = Number(route.params.day);
-});
-
-watch(selectedDay, () => {
-  resultPartOne.value = '❓';
-  resultPartTwo.value = '❓';
+  if (selectedDay.value !== undefined) {
+    input.value = store.fetchInput(selectedDay.value);
+    answer.value = store.fetchAnswer(selectedDay.value);
+  }
 });
 
 watch(solve, () => {
   if (solve.value && puzzle.value) {
-    const input = store.fetchInput(puzzle.value.day);
-    if (input) {
-      const solver = new puzzle.value.solver(input);
-      resultPartOne.value = solver.partOne();
-      resultPartTwo.value = solver.partTwo();
+    if (input.value) {
+      answer.value = undefined;
+      const solver = new puzzle.value.solver(input.value);
+      const one = solver.partOne();
+      const two = solver.partTwo();
+      answer.value = { one: one, two: two };
+      store.storeAnswer(puzzle.value.day, { one: one, two: two });
     }
     solve.value = false;
   }
@@ -45,7 +46,9 @@ function selectInput(event: Event): void {
     const reader = new FileReader();
     reader.onload = (e) => {
       if (typeof e.target?.result === 'string') {
-        store.storeInput(day, e.target.result as string);
+        const inputValue = e.target.result as string;
+        input.value = inputValue;
+        store.storeInput(day, inputValue);
       }
     };
     reader.readAsText(file);
@@ -64,20 +67,22 @@ function selectInput(event: Event): void {
   <div class="results">
     <div class="part">
       <div>⭐ Part One</div>
-      <div class="result">{{ resultPartOne }}</div>
+      <div class="result">{{ answer?.one ?? '❓' }}</div>
     </div>
     <div class="part">
       <div>⭐ Part Two</div>
-      <div class="result">{{ resultPartTwo }}</div>
+      <div class="result">{{ answer?.two ?? '❓' }}</div>
     </div>
   </div>
   <div class="buttons">
-    <label @click="solve = true">Solve</label>
+    <label :class="{ disabled: input === undefined }" @click="solve = true"
+      >Solve</label
+    >
     <label for="select-input">Load input</label>
     <input id="select-input" type="file" @change="selectInput" />
   </div>
-  <div v-if="puzzle?.day" class="puzzle-input">
-    {{ store.fetchInput(puzzle.day) }}
+  <div v-if="input" class="puzzle-input">
+    {{ input }}
   </div>
 </template>
 
@@ -130,6 +135,10 @@ label {
   font-weight: bold;
 
   user-select: none;
+}
+
+label.disabled {
+  color: var(--color-inactive);
 }
 
 input {

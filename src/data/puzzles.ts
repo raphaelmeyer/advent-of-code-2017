@@ -3,6 +3,7 @@ import { Day02 } from '@/logic/solver.day-02';
 import { Day03 } from '@/logic/solver.day-03';
 import { Day04 } from '@/logic/solver.day-04';
 import { Day05 } from '@/logic/solver.day-05';
+import { Day06 } from '@/logic/solver.day-06';
 import { NotYet } from '@/logic/solver.not-yet';
 import type { Puzzle } from '@/models/puzzle.types';
 
@@ -12,11 +13,11 @@ export const puzzles: Puzzle[] = [
   { day: 3, name: 'Spiral Memory', solver: Day03 },
   { day: 4, name: 'High-Entropy Passphrases', solver: Day04 },
   { day: 5, name: 'A Maze of Twisty Trampolines, All Alike', solver: Day05 },
-  { day: 6, name: '', solver: NotYet },
-  { day: 7, name: '', solver: NotYet },
-  { day: 8, name: '', solver: NotYet },
-  { day: 9, name: '', solver: NotYet },
-  { day: 10, name: '', solver: NotYet },
-  { day: 11, name: '', solver: NotYet },
-  { day: 12, name: '', solver: NotYet },
+  { day: 6, name: 'Memory Reallocation', solver: Day06 },
+  { day: 7, name: 'Recursive Circus', solver: NotYet },
+  { day: 8, name: 'I Heard You Like Registers', solver: NotYet },
+  { day: 9, name: 'Stream Processing', solver: NotYet },
+  { day: 10, name: 'Knot Hash', solver: NotYet },
+  { day: 11, name: 'Hex Ed', solver: NotYet },
+  { day: 12, name: 'Digital Plumber', solver: NotYet },
 ];

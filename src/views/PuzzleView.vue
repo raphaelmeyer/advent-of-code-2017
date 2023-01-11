@@ -141,8 +141,9 @@ label.disabled {
   color: var(--color-inactive);
 }
 
-input {
+input[type='file'] {
   opacity: 0;
+  width: 0;
 }
 
 .puzzle-input {

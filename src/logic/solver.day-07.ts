@@ -1,4 +1,4 @@
-import type { PuzzleSolver } from '@/models/puzzle.types';
+import type { PuzzleAnswer, PuzzleSolver } from '@/models/puzzle.types';
 import { makeLeft, makeRight, type Either } from './helpers/either';
 
 export interface Disc {
@@ -15,20 +15,22 @@ export class Day07 implements PuzzleSolver {
     this._tower = Day07.parseInput(_input);
   }
 
-  public partOne(): string {
-    return this._findRoot();
+  public solve(): PuzzleAnswer {
+    const root = this._findRoot();
+
+    return {
+      partOne: Promise.resolve(root),
+      partTwo: this._partTwo(root),
+    };
   }
 
-  public partTwo(): string {
-    const root = this._findRoot();
-    if (root) {
-      const result = this._search(root);
-      if (result.isRight) {
-        return result.value.toString();
-      }
+  private _partTwo(root: string): Promise<string> {
+    const result = this._search(root);
+    if (result.isRight) {
+      return Promise.resolve(result.value.toString());
     }
 
-    throw new Error('undefined root');
+    return Promise.reject('no solution');
   }
 
   public static parseInput(input: string): Tower {

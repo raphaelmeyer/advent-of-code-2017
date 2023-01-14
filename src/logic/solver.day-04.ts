@@ -1,20 +1,24 @@
-import type { PuzzleSolver } from '@/models/puzzle.types';
+import type { PuzzleAnswer, PuzzleSolver } from '@/models/puzzle.types';
 
 export class Day04 implements PuzzleSolver {
-  private _passphrases: string[][];
+  public constructor(private _input: string) {}
 
-  public constructor(private _input: string) {
-    this._passphrases = Day04.parseInput(_input);
+  public solve(): PuzzleAnswer {
+    const passphrases = Day04.parseInput(this._input);
+    return {
+      partOne: this._partOne(passphrases),
+      partTwo: this._partTwo(passphrases),
+    };
   }
 
-  public partOne(): string {
-    const valid = this._passphrases.filter((pph) => Day04.isValid(pph));
-    return valid.length.toString();
+  private _partOne(passphrases: string[][]): Promise<string> {
+    const valid = passphrases.filter((pph) => Day04.isValid(pph));
+    return Promise.resolve(valid.length.toString());
   }
 
-  public partTwo(): string {
-    const valid = this._passphrases.filter((pph) => Day04.anotherPolicy(pph));
-    return valid.length.toString();
+  private _partTwo(passphrases: string[][]): Promise<string> {
+    const valid = passphrases.filter((pph) => Day04.anotherPolicy(pph));
+    return Promise.resolve(valid.length.toString());
   }
 
   public static parseInput(input: string): string[][] {

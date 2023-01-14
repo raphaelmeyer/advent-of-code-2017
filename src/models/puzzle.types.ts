@@ -1,6 +1,10 @@
+export interface PuzzleAnswer {
+  partOne: Promise<string>;
+  partTwo: Promise<string>;
+}
+
 export interface PuzzleSolver {
-  partOne(): string;
-  partTwo(): string;
+  solve(): PuzzleAnswer;
 }
 
 export interface SolverConstructor {

@@ -3,15 +3,14 @@ import { Day06 } from '../solver.day-06';
 
 describe('Day 6', () => {
   const example = '0 2 7 0';
+  const answer = new Day06(example).solve();
 
-  it('should detect the infinite loop', () => {
-    const solver = new Day06(example);
-    expect(solver.partOne()).toEqual('5');
+  it('should detect the infinite loop', async () => {
+    expect(await answer.partOne).toEqual('5');
   });
 
-  it('should report the loop size', () => {
-    const solver = new Day06(example);
-    expect(solver.partTwo()).toEqual('4');
+  it('should report the loop size', async () => {
+    expect(await answer.partTwo).toEqual('4');
   });
 
   it('should redistribute blocks', () => {

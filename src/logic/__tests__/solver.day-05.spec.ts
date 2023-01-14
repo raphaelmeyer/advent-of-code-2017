@@ -10,11 +10,13 @@ describe('Day 5', () => {
 -3
 `;
 
-  it('should reach the exit', () => {
-    expect(new Day05(example).partOne()).toEqual('5');
+  it('should reach the exit', async () => {
+    const answer = new Day05(example).solve();
+    expect(await answer.partOne).toEqual('5');
   });
 
-  it('should reach the exit with stranger jumps', () => {
-    expect(new Day05(example).partTwo()).toEqual('10');
+  it('should reach the exit with stranger jumps', async () => {
+    const answer = new Day05(example).solve();
+    expect(await answer.partTwo).toEqual('10');
   });
 });

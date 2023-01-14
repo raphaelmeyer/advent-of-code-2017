@@ -29,11 +29,14 @@ cntj (57)
     });
   });
 
-  it('should find the bottom program', () => {
-    expect(new Day07(example).partOne()).toEqual('tknk');
-  });
+  describe('Answer', () => {
+    const answer = new Day07(example).solve();
+    it('should find the bottom program', async () => {
+      expect(await answer.partOne).toEqual('tknk');
+    });
 
-  it('should find weight to balance the entire tower', () => {
-    expect(new Day07(example).partTwo()).toEqual('60');
+    it('should find weight to balance the entire tower', async () => {
+      expect(await answer.partTwo).toEqual('60');
+    });
   });
 });

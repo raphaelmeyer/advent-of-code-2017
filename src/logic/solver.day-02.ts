@@ -1,23 +1,24 @@
-import type { PuzzleSolver } from '@/models/puzzle.types';
+import type { PuzzleAnswer, PuzzleSolver } from '@/models/puzzle.types';
 
 export class Day02 implements PuzzleSolver {
-  _rows: number[][] = [];
+  constructor(private _input: string) {}
 
-  constructor(private _input: string) {
-    this._rows = Day02.parseInput(_input);
+  public solve(): PuzzleAnswer {
+    const rows = Day02.parseInput(this._input);
+    return {
+      partOne: this._partOne(rows),
+      partTwo: this._partTwo(rows),
+    };
   }
 
-  public partOne(): string {
-    const checksum = this._rows.reduce(
-      (sum, row) => sum + Day02.difference(row),
-      0
-    );
-    return checksum.toString();
+  private _partOne(rows: number[][]): Promise<string> {
+    const checksum = rows.reduce((sum, row) => sum + Day02.difference(row), 0);
+    return Promise.resolve(checksum.toString());
   }
 
-  public partTwo(): string {
-    const divsum = this._rows.reduce((sum, row) => sum + Day02.evenly(row), 0);
-    return divsum.toString();
+  private _partTwo(rows: number[][]): Promise<string> {
+    const divsum = rows.reduce((sum, row) => sum + Day02.evenly(row), 0);
+    return Promise.resolve(divsum.toString());
   }
 
   public static parseInput(input: string): number[][] {
@@ -53,6 +54,6 @@ export class Day02 implements PuzzleSolver {
         }
       }
     }
-    throw new Error('no solution found');
+    return -1;
   }
 }

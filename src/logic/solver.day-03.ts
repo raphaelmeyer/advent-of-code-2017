@@ -1,4 +1,4 @@
-import type { PuzzleSolver } from '@/models/puzzle.types';
+import type { PuzzleAnswer, PuzzleSolver } from '@/models/puzzle.types';
 
 interface Pos {
   x: number;
@@ -9,30 +9,34 @@ interface Pos {
 type Direction = 'right' | 'up' | 'left' | 'down';
 
 export class Day03 implements PuzzleSolver {
-  private _value;
+  constructor(private _input: string) {}
 
-  constructor(private _input: string) {
-    this._value = parseInt(this._input);
+  public solve(): PuzzleAnswer {
+    const value = parseInt(this._input);
+    return {
+      partOne: this._partOne(value),
+      partTwo: this._partTwo(value),
+    };
   }
 
-  public partOne(): string {
-    if (this._value === 1) {
-      return '0';
+  private _partOne(value: number): Promise<string> {
+    if (value === 1) {
+      return Promise.resolve('0');
     }
 
     let i = 1;
-    while (this._value > i * i) {
+    while (value > i * i) {
       i = i + 2;
     }
 
     const j = i - 1;
-    const a = (this._value - 1) % j;
+    const a = (value - 1) % j;
     const b = a < j / 2 ? j - a : a;
 
-    return b.toString();
+    return Promise.resolve(b.toString());
   }
 
-  public partTwo(): string {
+  private _partTwo(value: number): Promise<string> {
     let off = 2;
     let dir: Direction = 'right';
     let count = 1;
@@ -40,7 +44,7 @@ export class Day03 implements PuzzleSolver {
     const current: Pos = { x: 0, y: 0, s: 1 };
     const spiral: Pos[] = [{ ...current }];
 
-    while (current.s <= this._value) {
+    while (current.s <= value) {
       this._move(current, dir);
 
       current.s = this._spiralSum(current, spiral);
@@ -52,7 +56,7 @@ export class Day03 implements PuzzleSolver {
       }
     }
 
-    return current.s.toString();
+    return Promise.resolve(current.s.toString());
   }
 
   private _move(current: Pos, dir: Direction) {

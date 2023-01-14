@@ -1,13 +1,18 @@
-import type { PuzzleSolver } from '@/models/puzzle.types';
+import type { PuzzleAnswer, PuzzleSolver } from '@/models/puzzle.types';
 
 export class Day05 implements PuzzleSolver {
-  private _offsets: number[];
-  public constructor(private _input: string) {
-    this._offsets = this._parseInput(_input);
+  public constructor(private _input: string) {}
+
+  public solve(): PuzzleAnswer {
+    const offsets = this._parseInput(this._input);
+    return {
+      partOne: this._partOne(offsets),
+      partTwo: this._partTwo(offsets),
+    };
   }
 
-  public partOne(): string {
-    const maze = [...this._offsets];
+  private _partOne(offsets: number[]): Promise<string> {
+    const maze = [...offsets];
     let pc = 0;
     let n = 0;
     while (0 <= pc && pc < maze.length) {
@@ -16,11 +21,11 @@ export class Day05 implements PuzzleSolver {
       maze[old]++;
       n++;
     }
-    return n.toString();
+    return Promise.resolve(n.toString());
   }
 
-  public partTwo(): string {
-    const maze = [...this._offsets];
+  public _partTwo(offsets: number[]): Promise<string> {
+    const maze = [...offsets];
     let pc = 0;
     let n = 0;
     while (0 <= pc && pc < maze.length) {
@@ -30,7 +35,7 @@ export class Day05 implements PuzzleSolver {
       maze[old] = offset >= 3 ? offset - 1 : offset + 1;
       n++;
     }
-    return n.toString();
+    return Promise.resolve(n.toString());
   }
 
   private _parseInput(input: string): number[] {

@@ -12,9 +12,9 @@ describe('Day 2', () => {
                     3 8 6 5
 `;
 
-  it('should calculate the checksum', () => {
-    const solver = new Day02(example);
-    expect(solver.partOne()).toEqual('18');
+  it('should calculate the checksum', async () => {
+    const answer = new Day02(example).solve();
+    expect(await answer.partOne).toEqual('18');
   });
 
   it('should calculate the difference of row', () => {
@@ -23,9 +23,9 @@ describe('Day 2', () => {
     expect(Day02.difference([2, 4, 6, 8])).toStrictEqual(6);
   });
 
-  it('should calculate the evenly divisible values', () => {
-    const solver = new Day02(example2);
-    expect(solver.partTwo()).toEqual('9');
+  it('should calculate the evenly divisible values', async () => {
+    const answer = new Day02(example2).solve();
+    expect(await answer.partTwo).toEqual('9');
   });
 
   it('should find evenly divisible values', () => {

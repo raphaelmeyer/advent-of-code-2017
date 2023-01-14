@@ -25,14 +25,19 @@ watchEffect(() => {
   }
 });
 
-watch(solve, () => {
+watch(solve, async () => {
   if (solve.value && puzzle.value) {
     if (input.value) {
-      answer.value = undefined;
+      answer.value = { one: '🦌', two: '🎅' };
       const solver = new puzzle.value.solver(input.value);
-      const one = solver.partOne();
-      const two = solver.partTwo();
+      const result = solver.solve();
+
+      const one = await result.partOne;
+      answer.value = { one: one, two: '🦌' };
+
+      const two = await result.partTwo;
       answer.value = { one: one, two: two };
+
       store.storeAnswer(puzzle.value.day, { one: one, two: two });
     }
     solve.value = false;

@@ -1,38 +1,35 @@
-import type { PuzzleSolver } from '@/models/puzzle.types';
+import type { PuzzleAnswer, PuzzleSolver } from '@/models/puzzle.types';
 
 export class Day06 implements PuzzleSolver {
-  private _banks: number[];
+  constructor(private _input: string) {}
 
-  constructor(private _input: string) {
-    this._banks = _input
+  public solve(): PuzzleAnswer {
+    const banks = this._input
       .split(/\s+/)
       .filter((w) => w.trim())
       .map((w) => parseInt(w));
-  }
 
-  public partOne(): string {
     const memory: number[][] = [];
-    let next = this._banks;
+    let next = banks;
 
     while (!memory.find((b) => this.compare(b, next))) {
       memory.push(next);
       next = Day06.redistribute(next);
     }
 
-    return memory.length.toString();
+    return {
+      partOne: this._partOne(memory),
+      partTwo: this._partTwo(memory, next),
+    };
   }
 
-  public partTwo(): string {
-    const memory: number[][] = [];
-    let next = this._banks;
+  private _partOne(memory: number[][]): Promise<string> {
+    return Promise.resolve(memory.length.toString());
+  }
 
-    while (!memory.find((b) => this.compare(b, next))) {
-      memory.push(next);
-      next = Day06.redistribute(next);
-    }
-
-    const start = memory.findIndex((b) => this.compare(b, next));
-    return (memory.length - start).toString();
+  private _partTwo(memory: number[][], last: number[]): Promise<string> {
+    const start = memory.findIndex((b) => this.compare(b, last));
+    return Promise.resolve((memory.length - start).toString());
   }
 
   public static redistribute(banks: number[]): number[] {

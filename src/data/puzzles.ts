@@ -5,6 +5,7 @@ import { Day04 } from '@/logic/solver.day-04';
 import { Day05 } from '@/logic/solver.day-05';
 import { Day06 } from '@/logic/solver.day-06';
 import { Day07 } from '@/logic/solver.day-07';
+import { Day08 } from '@/logic/solver.day-08';
 import { NotYet } from '@/logic/solver.not-yet';
 import type { Puzzle } from '@/models/puzzle.types';
 
@@ -16,7 +17,7 @@ export const puzzles: Puzzle[] = [
   { day: 5, name: 'A Maze of Twisty Trampolines, All Alike', solver: Day05 },
   { day: 6, name: 'Memory Reallocation', solver: Day06 },
   { day: 7, name: 'Recursive Circus', solver: Day07 },
-  { day: 8, name: 'I Heard You Like Registers', solver: NotYet },
+  { day: 8, name: 'I Heard You Like Registers', solver: Day08 },
   { day: 9, name: 'Stream Processing', solver: NotYet },
   { day: 10, name: 'Knot Hash', solver: NotYet },
   { day: 11, name: 'Hex Ed', solver: NotYet },

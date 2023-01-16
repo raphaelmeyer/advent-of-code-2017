@@ -1,4 +1,9 @@
-name: Advent of Code 2017 in Vue3
+name: Build and Deploy
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 on:
   push:

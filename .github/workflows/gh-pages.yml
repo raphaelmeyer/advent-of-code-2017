@@ -19,6 +19,7 @@ jobs:
       - run: npm run lint
       - run: npm run test:unit -- --run
       - run: npm run build
+      - uses: actions/configure-pages@v2
       - uses: actions/upload-pages-artifact@v1
         with:
           path: './dist'

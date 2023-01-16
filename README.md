@@ -1,8 +1,8 @@
-# advent-of-vue
+# Advent of Code 2017
 
-## Customize configuration
+![example workflow](https://github.com/raphaelmeyer/advent-of-code-2017/actions/workflows/gh-pages.yml/badge.svg)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+[🔗Advent of Code 2017](https://raphaelmeyer.github.io/advent-of-code-2017/)
 
 ## Project Setup
 

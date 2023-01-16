@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? '/advent-of-code-2017/' : './',
   plugins: [vue()],
   resolve: {
     alias: {

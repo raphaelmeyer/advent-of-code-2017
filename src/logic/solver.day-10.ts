@@ -1,27 +1,37 @@
 import type { PuzzleAnswer, PuzzleSolver } from '@/models/puzzle.types';
 
 export class Day10 implements PuzzleSolver {
-  private _lengths: number[] = [];
-
   constructor(private _input: string) {}
 
   solve(): PuzzleAnswer {
-    this._lengths = Day10.parseInput(this._input);
+    const lengths = Day10.parseInput(this._input);
 
     return {
-      partOne: this._partOne(),
-      partTwo: this._partTwo(),
+      partOne: this._partOne(lengths),
+      partTwo: this._partTwo(this._input),
     };
   }
 
-  private _partOne(): Promise<string> {
-    const knoted = Day10.knot(this._lengths, 256);
+  private _partOne(lengths: number[]): Promise<string> {
+    const knoted = Day10.knot(lengths, 256);
     const product = knoted[0] * knoted[1];
     return Promise.resolve(product.toString());
   }
 
-  private _partTwo(): Promise<string> {
-    const lengths = this._input
+  private _partTwo(input: string): Promise<string> {
+    const hash = Day10.knotHash(input);
+    return Promise.resolve(hash);
+  }
+
+  public static parseInput(input: string): number[] {
+    return input
+      .trim()
+      .split(',')
+      .map((n) => parseInt(n));
+  }
+
+  public static knotHash(input: string): string {
+    const lengths = input
       .trim()
       .split('')
       .map((c) => c.charCodeAt(0))
@@ -33,20 +43,11 @@ export class Day10 implements PuzzleSolver {
       groups.push(sparse.slice(g, g + 16));
     }
 
-    const dense = groups
+    return groups
       .map((group) => group.reduce((xord, ch) => xord ^ ch), 0)
       .flat()
       .map((n) => n.toString(16).padStart(2, '0'))
       .join('');
-
-    return Promise.resolve(dense.toString());
-  }
-
-  public static parseInput(input: string): number[] {
-    return input
-      .trim()
-      .split(',')
-      .map((n) => parseInt(n));
   }
 
   public static knot(

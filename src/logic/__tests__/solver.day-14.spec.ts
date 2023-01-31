@@ -6,4 +6,9 @@ describe('Day 14', () => {
     const answer = new Day14('flqrgnkx').solve();
     expect(await answer.partOne).toEqual('8108');
   });
+
+  it('should count the number of regions', async () => {
+    const answer = new Day14('flqrgnkx').solve();
+    expect(await answer.partTwo).toEqual('1242');
+  });
 });

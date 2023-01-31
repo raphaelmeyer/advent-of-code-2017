@@ -65,9 +65,9 @@ function selectInput(event: Event): void {
 <template>
   <h2>Day {{ puzzle?.day }}: {{ puzzle?.name }}</h2>
   <div class="desc">
-    <a :href="`https://adventofcode.com/2017/day/${selectedDay}`"
-      >🔗 Description</a
-    >
+    <a :href="`https://adventofcode.com/2017/day/${selectedDay}`">
+      🔗 Description
+    </a>
   </div>
   <div class="results">
     <div class="part">
@@ -80,9 +80,9 @@ function selectInput(event: Event): void {
     </div>
   </div>
   <div class="buttons">
-    <label :class="{ disabled: input === undefined }" @click="solve = true"
-      >Solve</label
-    >
+    <label :class="{ disabled: input === undefined }" @click="solve = true">
+      Solve
+    </label>
     <label for="select-input">Load input</label>
     <input id="select-input" type="file" @change="selectInput" />
   </div>

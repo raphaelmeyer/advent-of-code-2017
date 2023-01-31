@@ -6,28 +6,29 @@ import { RouterLink } from 'vue-router';
 <template>
   <div>
     <nav>
-      <RouterLink to="/">Home</RouterLink>
       <RouterLink
         v-for="puzzle in puzzles"
         :key="puzzle.day"
         :to="{ path: `/day/${puzzle.day}` }"
       >
-        Day {{ puzzle.day }}</RouterLink
-      >
+        <div class="day">
+          <div>Day</div>
+          <div>{{ puzzle.day }}</div>
+        </div>
+      </RouterLink>
     </nav>
   </div>
 </template>
 
 <style scoped>
 nav {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
 }
 
 nav a {
   color: var(--color-text);
   font-weight: bold;
-  margin: 0 1em 0 0;
 }
 
 nav a:hover {
@@ -40,5 +41,11 @@ nav a.router-link-exact-active {
 
 nav a.router-link-exact-active:hover {
   text-shadow: 0 0 5px var(--color-selected);
+}
+
+.day {
+  width: 3.5em;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

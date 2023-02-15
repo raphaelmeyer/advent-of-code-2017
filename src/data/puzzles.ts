@@ -13,6 +13,7 @@ import { Day12 } from '@/logic/solver.day-12';
 import { Day13 } from '@/logic/solver.day-13';
 import { Day14 } from '@/logic/solver.day-14';
 import { Day15 } from '@/logic/solver.day-15';
+import { Day16 } from '@/logic/solver.day-16';
 import { NotYet } from '@/logic/solver.not-yet';
 import type { Puzzle } from '@/models/puzzle.types';
 
@@ -32,7 +33,7 @@ export const puzzles: Puzzle[] = [
   { day: 13, name: 'Packet Scanners', solver: Day13 },
   { day: 14, name: 'Disk Defragmentation', solver: Day14 },
   { day: 15, name: 'Dueling Generators', solver: Day15 },
-  { day: 16, name: '...', solver: NotYet },
+  { day: 16, name: 'Permutation Promenade', solver: Day16 },
   { day: 17, name: '...', solver: NotYet },
   { day: 18, name: '...', solver: NotYet },
   { day: 19, name: '...', solver: NotYet },

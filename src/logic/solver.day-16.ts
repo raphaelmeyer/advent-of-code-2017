@@ -15,7 +15,7 @@ export class Day16 implements PuzzleSolver {
 
     return {
       partOne: this._partOne(moves),
-      partTwo: this._partTwo(),
+      partTwo: this._partTwo(moves),
     };
   }
 
@@ -28,8 +28,18 @@ export class Day16 implements PuzzleSolver {
     return Promise.resolve(result);
   }
 
-  private _partTwo(): Promise<string> {
-    return Promise.resolve('🎄');
+  private _partTwo(moves: Dance): Promise<string> {
+    let formation = 'abcdefghijklmnop';
+    const [start, length] = this._findCycle(formation, moves);
+
+    const rem = (1000000000 - start) % length;
+    for (let i = 0; i < start + rem; i++) {
+      formation = moves
+        .reduce((f, m) => Day16._dance(f, m), formation.split(''))
+        .join('');
+    }
+
+    return Promise.resolve(formation);
   }
 
   private static _parseInput(input: string): Dance {
@@ -106,5 +116,25 @@ export class Day16 implements PuzzleSolver {
     formation[iA] = b;
     formation[iB] = a;
     return formation;
+  }
+
+  private _findCycle(formation: string, moves: Dance): [number, number] {
+    const results: string[] = [formation];
+
+    for (;;) {
+      const result = moves
+        .reduce(
+          (f, m) => Day16._dance(f, m),
+          results[results.length - 1].split('')
+        )
+        .join('');
+      const start = results.indexOf(result);
+
+      if (start >= 0) {
+        return [start, results.length - start];
+      }
+
+      results.push(result);
+    }
   }
 }

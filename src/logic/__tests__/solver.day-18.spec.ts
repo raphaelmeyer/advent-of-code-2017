@@ -14,10 +14,29 @@ set a 1
 jgz a -2
 `;
 
+const example2 = `
+snd 1
+snd 2
+snd p
+rcv a
+rcv b
+rcv c
+rcv d
+`;
+
 describe('Day 18', () => {
   it('should recover the frequency', async () => {
-    const answer = new Day18(example).solve();
-    expect(await answer.partOne).toEqual('4');
+    const instructions = Day18['_parseInput'](example);
+    const solver = new Day18(example);
+    const answer = await solver['_partOne'](instructions);
+    expect(answer).toEqual('4');
+  });
+
+  it('should count sends of program 1', async () => {
+    const instructions = Day18['_parseInput'](example2);
+    const solver = new Day18(example);
+    const answer = await solver['_partTwo'](instructions);
+    expect(answer).toEqual('3');
   });
 
   it('should parse the input', () => {

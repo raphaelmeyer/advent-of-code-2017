@@ -9,7 +9,7 @@ type Instruction =
   | { ins: 'add'; x: Register; y: Value }
   | { ins: 'mul'; x: Register; y: Value }
   | { ins: 'mod'; x: Register; y: Value }
-  | { ins: 'rcv'; x: Value }
+  | { ins: 'rcv'; x: Register }
   | { ins: 'jgz'; x: Value; y: Value };
 
 const reRegister = /[a-z]/;
@@ -88,6 +88,135 @@ class Executor {
   }
 }
 
+type Regs = Map<string, number>;
+
+interface State {
+  pc: number;
+  in: number[];
+  out: number[];
+  regs: Regs;
+  snd: number;
+}
+
+class Executor2 {
+  private _q0to1: number[] = [];
+  private _q1to0: number[] = [];
+  private _p0: State = {
+    pc: 0,
+    in: this._q1to0,
+    out: this._q0to1,
+    regs: new Map(),
+    snd: 0,
+  };
+  private _p1: State = {
+    pc: 0,
+    in: this._q0to1,
+    out: this._q1to0,
+    regs: new Map(),
+    snd: 0,
+  };
+
+  public constructor(private _instructions: Instruction[]) {}
+
+  public run(): number {
+    this._p0.regs.set('p', 0);
+    this._p1.regs.set('p', 1);
+    for (;;) {
+      this._p0 = this._exec(this._p0);
+      this._p1 = this._exec(this._p1);
+
+      if (this._deadlock()) {
+        return this._p1.snd;
+      }
+    }
+  }
+
+  private _exec(p: State): State {
+    const ins = this._instructions.at(p.pc);
+    if (ins === undefined) {
+      throw new Error('SEGV');
+    }
+
+    switch (ins.ins) {
+      case 'snd':
+        p.out.push(this._value(p.regs, ins.x));
+        p.snd++;
+        p.pc++;
+        break;
+
+      case 'set':
+        this._store(p.regs, ins.x, this._value(p.regs, ins.y));
+        p.pc++;
+        break;
+
+      case 'add':
+        this._store(
+          p.regs,
+          ins.x,
+          this._value(p.regs, ins.x) + this._value(p.regs, ins.y)
+        );
+        p.pc++;
+        break;
+
+      case 'mul':
+        this._store(
+          p.regs,
+          ins.x,
+          this._value(p.regs, ins.x) * this._value(p.regs, ins.y)
+        );
+        p.pc++;
+        break;
+
+      case 'mod':
+        this._store(
+          p.regs,
+          ins.x,
+          this._value(p.regs, ins.x) % this._value(p.regs, ins.y)
+        );
+        p.pc++;
+        break;
+
+      case 'rcv':
+        {
+          if (p.in.length > 0) {
+            this._store(p.regs, ins.x, p.in.shift() ?? 0);
+            p.pc++;
+          }
+        }
+        break;
+
+      case 'jgz':
+        p.pc =
+          p.pc +
+          (this._value(p.regs, ins.x) > 0 ? this._value(p.regs, ins.y) : 1);
+        break;
+    }
+
+    return p;
+  }
+
+  private _value(r: Regs, v: Value): number {
+    switch (v.type) {
+      case 'val':
+        return v.val;
+      case 'reg':
+        return r.get(v.name) ?? 0;
+    }
+  }
+
+  private _store(r: Regs, dst: Register, value: number) {
+    r.set(dst.name, value);
+  }
+  private _deadlock(): boolean {
+    return (
+      this._instructions.at(this._p0.pc)?.ins === 'rcv' &&
+      this._p0.in.length === 0 &&
+      this._instructions.at(this._p1.pc)?.ins === 'rcv' &&
+      this._p1.in.length === 0
+    );
+  }
+}
+
 export class Day18 implements PuzzleSolver {
   public constructor(private _input: string) {}
 
@@ -96,7 +225,7 @@ export class Day18 implements PuzzleSolver {
 
     return {
       partOne: this._partOne(instructions),
-      partTwo: this._partTwo(),
+      partTwo: this._partTwo(instructions),
     };
   }
 
@@ -107,8 +236,11 @@ export class Day18 implements PuzzleSolver {
     return Promise.resolve(result.toString());
   }
 
-  private _partTwo(): Promise<string> {
-    return Promise.resolve('🎄');
+  private _partTwo(instructions: Instruction[]): Promise<string> {
+    const exe = new Executor2(instructions);
+    const result = exe.run();
+
+    return Promise.resolve(result.toString());
   }
 
   private static _parseInput(input: string): Instruction[] {
@@ -141,7 +273,7 @@ export class Day18 implements PuzzleSolver {
         return { ins: 'mod', x: Day18._register(x), y: Day18._value(y) };
 
       case 'rcv':
-        return { ins: 'rcv', x: Day18._value(x) };
+        return { ins: 'rcv', x: Day18._register(x) };
 
       case 'jgz':
         return { ins: 'jgz', x: Day18._value(x), y: Day18._value(y) };
